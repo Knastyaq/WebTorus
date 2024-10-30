@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "config"
+		},
+		{
+			"path": "custom_shape"
+		},
+		{
+			"path": "reports"
+		},
+		{
+			"path": "test_data"
+		},
+		{
+			"path": "user_classes"
+		},
+		{
+			"path": "utils"
+		}
+	]
+}
