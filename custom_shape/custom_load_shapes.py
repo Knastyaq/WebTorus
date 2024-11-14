@@ -15,11 +15,11 @@ class CustomLoadShape(LoadTestShape):
 
         case "stages":
             stages = [
-                {"duration":30, "users": 10, "spawn_rate": 2},
-                {"duration":60, "users": 20, "spawn_rate": 2},
-                {"duration":90, "users": 30, "spawn_rate": 2},
-                {"duration":120, "users": 40, "spawn_rate": 2},
-                {"duration":150, "users": 50, "spawn_rate": 2}
+                {"duration":300, "users": 5, "spawn_rate": 2},
+                {"duration":600, "users": 10, "spawn_rate": 2},
+                {"duration":900, "users": 15, "spawn_rate": 2},
+                {"duration":1200, "users": 20, "spawn_rate": 2},
+                {"duration":1500, "users": 25, "spawn_rate": 2}
             ]
 
     """

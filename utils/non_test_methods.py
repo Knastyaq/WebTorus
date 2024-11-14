@@ -17,3 +17,13 @@ def generateFlightsDates():
 
 def generateRandomCardNumber():
     return random.randrange(10**15,10**16)
+
+def processCancelRequestBody(ids_list= list, names_list= list):
+
+    cgi_part = ".cgifields="+"&.cgifields=".join(names_list)
+    static_part = "&removeFlights.x=59&removeFlights.y=15"
+    flights_part = "flightID="+"&flightID=".join(ids_list)
+    todelete_part = f"{names_list[random.randrange(0, len(ids_list))]}=on"
+    result = f"{todelete_part}&{flights_part}&{cgi_part}&{static_part}"
+
+    return result

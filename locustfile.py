@@ -11,4 +11,7 @@ if cfg.webtours_base.included:
     logger.info('Imported WebToursBaseUserClass')
 
 if cfg.webtours_cancel.included:
-    pass
+    from user_classes.wt_cancel_scenario import WebToursCancelUserClass
+    WebToursCancelUserClass.weight = cfg.webtours_cancel.weight
+    logger.info(f'Imported WebToursCancelUserClass with{WebToursCancelUserClass.weight}')
+    

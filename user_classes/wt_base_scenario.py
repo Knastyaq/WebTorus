@@ -3,7 +3,7 @@ from config.config import cfg, logger
 from utils.assertion import check_http_response 
 from utils.non_test_methods import open_csv_file , generateFlightsDates
 import sys, re , random
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus , quote
 
 
 
@@ -180,8 +180,8 @@ class PurchaseFlightTicket(SequentialTaskSet): # класс с задачами 
 
         ) as r_03_0response:
             check_http_response(r_03_0response, "Flight departing from")
-            self.outboundFlight = re.search(r"<input type=\"radio\" name=\"outboundFlight\" value=\"(.*)\">",r_03_0response.text ).group(1)
-
+            self.outboundFlight = re.search(r'name=\"outboundFlight\" value=\"(.*)\" checked=\"checked\"',r_03_0response.text ).group(1)
+            logger.info(f"r03___self.outboundFlight:{self.outboundFlight}")
 
     @task
     def uc04_ChooseFlightOption(self):
@@ -205,7 +205,8 @@ class PurchaseFlightTicket(SequentialTaskSet): # класс с задачами 
     def uc05_ConfirmFlightBooking(self):
 
 
-        r05_00_body = f"firstName={self.Login}&lastName={self.Password}&address1={self.address1}&address2={quote_plus(self.address2)}&pass1={self.pass1}&creditCard={generateFlightsDates()}&expDate={self.expDate}&saveCC=on&oldCCOption=on&numPassengers=1&seatType={self.seatType}&seatPref={self.seatPref}&outboundFlight={quote_plus(self.outboundFlight)}&advanceDiscount=0&returnFlight=&JSFormSubmit=off&buyFlights.x=81&buyFlights.y=13&.cgifields=saveCC"
+
+        r05_00_body = f"firstName={self.Login}&lastName={self.Password}&address1={self.address1}&address2={quote(self.address2)}&pass1={self.pass1}&creditCard={generateFlightsDates()}&expDate={self.expDate}&saveCC=on&oldCCOption=on&numPassengers=1&seatType={self.seatType}&seatPref={self.seatPref}&outboundFlight={quote_plus(self.outboundFlight)}&advanceDiscount=0&returnFlight=&JSFormSubmit=off&buyFlights.x=81&buyFlights.y=13&.cgifields=saveCC"
         logger.info(f"us05 request body : {r05_00_body}")
 
         with self.client.post(
@@ -213,7 +214,7 @@ class PurchaseFlightTicket(SequentialTaskSet): # класс с задачами 
             name = 'req_05_0_ConfirmFlightBooking_/cgi-bin/reservations.pl',
             headers = self.post_request_content_type_header,
             data = r05_00_body,
-            debug_stream = sys.stderr,
+            #debug_stream = sys.stderr,
             catch_response = True
 
         ) as r_05_0response:
@@ -225,7 +226,7 @@ class PurchaseFlightTicket(SequentialTaskSet): # класс с задачами 
 
 
 class WebToursBaseUserClass(FastHttpUser): # юзер-класс, принимающий в себя основные параметры теста
-    wait_time = constant_pacing(cfg.pacing)
+    wait_time = constant_pacing(cfg.webtours_base.pacing)
     host = cfg.url
 
     logger.info(f'WebToursBaseUserClass started. Host:{host}')
