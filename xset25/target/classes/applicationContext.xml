@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Базовые компоненты -->
+    <bean id="sparkPlug" class="com.example.car.parts.SparkPlug">
+        <property name="type" value="Standard"/>
+    </bean>
+
+    <bean id="starter" class="com.example.car.parts.Starter">
+        <property name="model" value="ST-100"/>
+    </bean>
+
+    <bean id="engine" class="com.example.car.parts.Engine">
+        <property name="starter" ref="starter"/>
+        <property name="sparkPlug" ref="sparkPlug"/>
+    </bean>
+
+    <bean id="wheel" class="com.example.car.parts.Wheel">
+        <property name="size" value="R17"/>
+    </bean>
+
+    <bean id="hinge" class="com.example.car.parts.Hinge">
+        <property name="type" value="Ball"/>
+    </bean>
+
+    <bean id="differential" class="com.example.car.parts.Differential">
+        <property name="type" value="Limited-slip"/>
+    </bean>
+
+    <bean id="suspension" class="com.example.car.parts.Suspension">
+        <property name="hinge" ref="hinge"/>
+        <property name="differential" ref="differential"/>
+    </bean>
+
+    <bean id="accumulator" class="com.example.car.parts.Accumulator">
+        <property name="capacity" value="60Ah"/>
+    </bean>
+
+    <bean id="car" class="com.example.car.parts.Car">
+        <property name="wheel" ref="wheel"/>
+        <property name="engine" ref="engine"/>
+        <property name="accumulator" ref="accumulator"/>
+        <property name="suspension" ref="suspension"/>
+    </bean>
+</beans>
